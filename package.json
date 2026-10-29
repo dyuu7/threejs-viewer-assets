@@ -1,0 +1,7 @@
+{
+  "name": "threejs-assets-maintenance",
+  "private": true,
+  "description": "Maintenance-only ESM dependency analysis; never shipped in the wheel",
+  "engines": { "node": ">=22" },
+  "devDependencies": { "es-module-lexer": "3.0.4" }
+}
