@@ -208,12 +208,17 @@ def stage(directory, pending):
 def verify(directory):
     version = version_at(git("rev-parse", "HEAD"))
     expected = distributions(directory)
-    for attempt in range(6):
+    # PyPI's CDN can briefly serve a cached 404 or partial file list after upload.
+    deadline = time.monotonic() + 300
+    while True:
         missing = missing_files(expected, pypi_files(version))
         if not missing:
             return version, expected
-        if attempt < 5:
-            time.sleep(5)
+        remaining = deadline - time.monotonic()
+        if remaining <= 0:
+            break
+        print(f"Waiting for PyPI metadata: {', '.join(sorted(missing))}", flush=True)
+        time.sleep(min(15, remaining))
     raise ValidationError(f"PyPI publication incomplete: {', '.join(sorted(missing))}")
 
 

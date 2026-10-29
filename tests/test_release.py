@@ -151,14 +151,32 @@ def test_partial_pypi_upload_stages_only_missing_file(tmp_path, monkeypatch):
 
 def test_verify_waits_for_complete_registry_metadata(monkeypatch):
     expected = {"wheel": "a", "sdist": "b"}
-    responses = iter([{}, {"wheel": "a"}, expected])
+    responses = iter([{}, {}, {"wheel": "a"}, expected])
+    elapsed = [0]
+
+    def sleep(seconds):
+        elapsed[0] += seconds
+
     monkeypatch.setattr(release, "version_at", lambda revision: "0.186.1")
     monkeypatch.setattr(release, "distributions", lambda directory: expected)
     monkeypatch.setattr(release, "pypi_files", lambda version: next(responses))
-    monkeypatch.setattr(release.time, "sleep", lambda seconds: None)
+    monkeypatch.setattr(release.time, "monotonic", lambda: elapsed[0])
+    monkeypatch.setattr(release.time, "sleep", sleep)
     assert release.verify(Path("dist")) == ("0.186.1", expected)
+    assert elapsed[0] > 25
+    elapsed[0] = 0
     monkeypatch.setattr(release, "pypi_files", lambda version: {"wheel": "a"})
     with pytest.raises(ValidationError, match="incomplete"):
+        release.verify(Path("dist"))
+    assert elapsed[0] == 300
+
+
+def test_verify_does_not_retry_published_hash_conflicts(monkeypatch):
+    monkeypatch.setattr(release, "version_at", lambda revision: "0.186.1")
+    monkeypatch.setattr(release, "distributions", lambda directory: {"wheel": "expected"})
+    monkeypatch.setattr(release, "pypi_files", lambda version: {"wheel": "different"})
+    monkeypatch.setattr(release.time, "sleep", lambda seconds: pytest.fail("Unexpected retry"))
+    with pytest.raises(ValidationError, match="Published bytes differ"):
         release.verify(Path("dist"))
 
 
