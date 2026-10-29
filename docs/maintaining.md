@@ -73,6 +73,3 @@ For packaging fixes, merge a new `.postN` version into main and run **Release**
 (or wait for the daily run). To retry an older version, run **Release** on its tag.
 Never move a release tag or replace published files. A hash mismatch needs
 investigation and, if the package must change, a new version.
-
-After the first release, verify `pip install threejs-assets` in a fresh environment
-and remove the unpublished notice from the README.

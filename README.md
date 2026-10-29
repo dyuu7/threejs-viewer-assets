@@ -14,9 +14,6 @@ pip install threejs-assets
 # or: uv add threejs-assets
 ```
 
-Not yet published to PyPI. Until the first release, build with `uv build` and
-install the wheel from `dist/`.
-
 ## Use
 
 ```python
@@ -58,7 +55,7 @@ Bundles Three.js core ESM and these addons, with their module dependencies:
 - `CSS2DRenderer`, `BufferGeometryUtils`, `GLTFLoader`
 
 Upstream files are unmodified. The [manifest](src/threejs_assets/assets/manifest.json)
-records the version, source, and hashes; the initial release uses **Three.js 0.186.1**.
+records the version, source, and hashes.
 
 Requires ES modules, import maps, and WebGL2. Supply your own models and textures;
 compressed-model decoders, WebGPU/TSL, and other addons are not included. This is
