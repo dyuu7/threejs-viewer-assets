@@ -1,0 +1,51 @@
+{
+  "entrypoints": [
+    "build/three.core.js",
+    "build/three.module.js",
+    "examples/jsm/controls/OrbitControls.js",
+    "examples/jsm/controls/TrackballControls.js",
+    "examples/jsm/helpers/ViewHelper.js",
+    "examples/jsm/lines/LineMaterial.js",
+    "examples/jsm/lines/LineSegments2.js",
+    "examples/jsm/lines/LineSegmentsGeometry.js",
+    "examples/jsm/loaders/GLTFLoader.js",
+    "examples/jsm/postprocessing/EffectComposer.js",
+    "examples/jsm/postprocessing/OutlinePass.js",
+    "examples/jsm/postprocessing/OutputPass.js",
+    "examples/jsm/postprocessing/RenderPass.js",
+    "examples/jsm/renderers/CSS2DRenderer.js",
+    "examples/jsm/utils/BufferGeometryUtils.js"
+  ],
+  "files": {
+    "LICENSE": "8b378ebe60e2fe500158cb0ac71cb5e8b7d92953c2abcc63a0eb90499653b5bc",
+    "build/three.core.js": "9edde002b066a9a05676a6127f67735b62baf399bdea529f2f7e31657da769e6",
+    "build/three.module.js": "9052042d676cb0fdc1ddfefe193053f34b7ac0513a616fdac4535d49987812ea",
+    "examples/jsm/controls/OrbitControls.js": "3d79d07ecb686b4e5d93232eedab255331c1beef711e13164eaa1f68655a5f2b",
+    "examples/jsm/controls/TrackballControls.js": "cce95baddf589c16fea901b70f2038eca4557357937e1b03f8c76fe7ffe7457f",
+    "examples/jsm/helpers/ViewHelper.js": "3572685243e0e532c09bb7498d5802459ddabf2d8ef41450f4013e78faba1ddf",
+    "examples/jsm/lines/LineMaterial.js": "d4517001f9d7b3e885ea5baa930de0077351e885db52ef4565cde4c7dd17eb23",
+    "examples/jsm/lines/LineSegments2.js": "fcbc20f576e88343cea12131f49b7003d7ab44ede422fcb694e567456022f7a0",
+    "examples/jsm/lines/LineSegmentsGeometry.js": "471f0a954a0c9c59d3d151392f424142a9164a722802f63b371971378a84a1b1",
+    "examples/jsm/loaders/GLTFLoader.js": "131c0f78c01d19368ae495caa65b3adaa10487810a36a05bb5901b769a35ac16",
+    "examples/jsm/postprocessing/EffectComposer.js": "4e079a5886152d7e529a59aef644e968ab4d32c6a33ce016b36bf29b2eac26f7",
+    "examples/jsm/postprocessing/MaskPass.js": "7cd08eee9d5d6f5578beaddbdcbe9c384f6873810af27f22ab7db3ceeb127aa3",
+    "examples/jsm/postprocessing/OutlinePass.js": "8eb486b1436432cf6f080c4a55b027f6d56b3ea66a9735c140a8be986107667b",
+    "examples/jsm/postprocessing/OutputPass.js": "02e4a261af34de71338185e9e87f0cbe5cba9115608d984363e1269dec1d2272",
+    "examples/jsm/postprocessing/Pass.js": "444b409c235ead986893c472e720da1b779a56985c7d10b279c7944b52bd61c5",
+    "examples/jsm/postprocessing/RenderPass.js": "817f6c3cdcd0fd41515d112359ea0532568eefb5aabd3b33903957ebca1b8a6a",
+    "examples/jsm/postprocessing/ShaderPass.js": "e2500a5913b26bbf5148ceaae644c6edcff06a18b01494ee37bf856353d2ab9d",
+    "examples/jsm/renderers/CSS2DRenderer.js": "256abfc6ae1aa20eb83c10d7a0e26534527df65872e4d52da6354bee78288c34",
+    "examples/jsm/shaders/CopyShader.js": "a33057d5ac91c43304c186ac0e8816e62bb2ed471d3a00ff3018dfd5c0389718",
+    "examples/jsm/shaders/OutputShader.js": "353479f77a8d7e2629d49ccac9fc2f5dbfdda5442e0adf867b00377a2fcb0cb2",
+    "examples/jsm/utils/BufferGeometryUtils.js": "9fb63427ce6641fa14fd0baff9cc4d1b5f9c3d85fd084bf2e90e803c44ec1797",
+    "examples/jsm/utils/SkeletonUtils.js": "b1632a703206c3d830de9fcbe515696770d04b71a15ee6b50afa6d2c3298c86f"
+  },
+  "schema_version": 1,
+  "upstream": {
+    "integrity": "sha512-blFeqb49wRCSGUGj7gtpfnSGHy2lwDk94RhUmS1c/hTby70kvChbWpkJ4Pm1390LqzzvTmzgXKHPEafJwCb8jA==",
+    "name": "three",
+    "sha256": "8cd068708ea44f2c73c944b1cead2ba2f0d5c15c8fc194e5700f4e4f4a033fe7",
+    "tarball": "https://registry.npmjs.org/three/-/three-0.186.1.tgz",
+    "version": "0.186.1"
+  }
+}
