@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Three.js assets · offline example</title>
+  <link rel="icon" href="data:,">
+  <style>
+    body { margin: 0; background: #0b0f18; color: #e6edf5; font: 16px system-ui, sans-serif; }
+    header { position: absolute; top: 24px; left: 24px; z-index: 1; }
+    h1 { margin: 0 0 8px; font-size: 22px; }
+    p { color: #acbbd0; }
+    select { padding: 6px; font: inherit; }
+    body > canvas { display: block; width: 100vw; height: 100vh; }
+    #labels { position: absolute; inset: 0; pointer-events: none; }
+    .label { padding: 4px 8px; border-radius: 4px; background: #182334dd; font-size: 13px; }
+  </style>
+  <script type="importmap">
+    {"imports": {
+      "three": "/assets/build/three.module.js",
+      "three/addons/": "/assets/examples/jsm/"
+    }}
+  </script>
+</head>
+<body>
+  <header>
+    <h1>Three.js · offline</h1>
+    <p id="status">Loading local resources…</p>
+    <label>Camera controls
+      <select id="controls"><option value="orbit">Orbit</option><option value="trackball">Trackball</option></select>
+    </label>
+    <label><input id="outline" type="checkbox" checked> Outline</label>
+    <p>Drag to rotate. Scroll to zoom. Click the corner axes to change view.</p>
+  </header>
+  <script type="module" src="/demo.js"></script>
+</body>
+</html>
