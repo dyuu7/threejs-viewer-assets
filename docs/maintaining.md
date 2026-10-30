@@ -27,20 +27,14 @@ Select addons for the viewing tasks documented in the README: camera navigation,
 geometry and model display, labels, and outline highlighting. A proposed entry
 must address one of these tasks, identify any additional offline resources or
 decoders, and have an installed-wheel browser test that exercises its behavior.
-Editor tools, physics, and game controls are outside this scope.
 
 `scripts/project.py` defines the supported `ENTRYPOINTS`; keep the README's
 scope in sync with that list. The manifest records these entries separately
-from the complete module dependency closure. Files included only as dependencies
-may change with upstream and carry no independent entry point guarantee.
+from the complete module dependency closure.
 
-Packaging-only `.postN` revisions preserve the supported entries and upstream
-resource bytes. For a scope change, update the selection, documentation, and
-browser coverage together in a reviewed upstream-version release. Document
-entry point removals, replacements, and required application changes in its
-release notes. Review the upstream migration guide and release notes before
-adopting a new Three.js version; the example passing does not establish downstream
-application compatibility.
+Update the selection, documentation, and browser coverage together when changing
+the scope. Review upstream release notes and migration guidance when adopting a
+new Three.js version, and describe relevant API changes in the release notes.
 
 ## Update resources
 
@@ -81,33 +75,6 @@ Save the publisher, then run **Actions → Release → Run workflow** on `main`,
 leaving the version empty. The first successful upload creates the PyPI project;
 subsequent releases use the same publisher. No repository secrets or variables
 are needed. Keep `v*` tags immutable; main must allow verified fast-forward updates.
-
-## Rename and first publication
-
-The old `threejs-assets` 0.186.1 release and `v0.186.1` tag belong to the previous
-package identity. Preserve them. The first `threejs-viewer-assets` release is
-0.186.1.post1, using `v0.186.1.post1`, so release recovery cannot select the old
-tag or reuse its artifacts. The upstream manifest remains at Three.js 0.186.1.
-
-When applying the rename:
-
-1. Rename the GitHub repository to `dyuu7/threejs-viewer-assets` and update the
-   checkout's origin to `git@github.com:dyuu7/threejs-viewer-assets.git`.
-2. In the owning PyPI account, register a **new pending Trusted Publisher** using
-   the exact fields above. The publisher for the old PyPI project does not grant
-   permission to create the new one. `gh` can manage GitHub but cannot configure
-   the PyPI account. A missing public project page does not reserve the name;
-   PyPI checks name eligibility when registering or publishing.
-3. Commit and push the renamed package and workflow to `main`, and wait for CI.
-   The release workflow's repository guard requires the new GitHub name.
-4. Run `gh workflow run publish.yml --repo dyuu7/threejs-viewer-assets --ref main`
-   after the publisher is configured. The first upload creates the PyPI project;
-   verify both distributions and the GitHub release for `v0.186.1.post1`.
-
-Consumers must replace both the distribution dependency and Python resource
-package name as described in the README. Keep the old PyPI files available for
-existing pins; the projects do not redirect or upgrade across names. Subsequent
-releases target only `threejs-viewer-assets`.
 
 ## Recovery and packaging fixes
 
