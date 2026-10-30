@@ -51,7 +51,7 @@ jobs:
       - run: uv build
       - run: uv run --locked twine check --strict dist/*
       - run: uv run --locked python scripts/check_dist.py
-      - run: git diff --exit-code -- src/threejs_assets
+      - run: git diff --exit-code -- src/threejs_viewer_assets
 
   browser:
     name: Offline Chromium / installed wheel
@@ -78,7 +78,7 @@ jobs:
       - run: uv build
       - run: uv run --locked twine check --strict dist/*
       - run: uv run --locked --group browser python scripts/check_dist.py --browser
-      - run: git diff --exit-code -- src/threejs_assets
+      - run: git diff --exit-code -- src/threejs_viewer_assets
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
           name: distributions-${{ inputs.revision || github.sha }}

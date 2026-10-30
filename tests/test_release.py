@@ -19,7 +19,7 @@ def repository(tmp_path, monkeypatch):
     release.git("config", "user.email", "tests@example.invalid")
     release.git("config", "user.name", "Release tests")
     release.git("config", "commit.gpgsign", "false")
-    package = work / "src/threejs_assets"
+    package = work / "src/threejs_viewer_assets"
     (package / "assets").mkdir(parents=True)
     (package / "assets/manifest.json").write_text('{"upstream":{"version":"0.186.1"}}')
     (package / "__init__.py").write_text('__version__ = "0.186.1"\n')

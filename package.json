@@ -1,5 +1,5 @@
 {
-  "name": "threejs-assets-maintenance",
+  "name": "threejs-viewer-assets-maintenance",
   "private": true,
   "description": "Maintenance-only ESM dependency analysis; never shipped in the wheel",
   "engines": { "node": ">=22" },

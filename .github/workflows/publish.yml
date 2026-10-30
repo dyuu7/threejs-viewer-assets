@@ -22,7 +22,7 @@ concurrency:
 jobs:
   prepare:
     if: >-
-      github.repository == 'dyuu7/threejs-assets' &&
+      github.repository == 'dyuu7/threejs-viewer-assets' &&
       (github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags/v'))
     runs-on: ubuntu-latest
     timeout-minutes: 15
@@ -82,7 +82,7 @@ jobs:
           commit-message: 'chore(assets): update Three.js to ${{ steps.sync.outputs.version }}'
           body-path: ${{ runner.temp }}/threejs-update.md
           add-paths: |
-            src/threejs_assets/
+            src/threejs_viewer_assets/
             uv.lock
           delete-branch: true
 
@@ -140,7 +140,7 @@ jobs:
     timeout-minutes: 10
     environment:
       name: pypi
-      url: https://pypi.org/p/threejs-assets
+      url: https://pypi.org/p/threejs-viewer-assets
     permissions:
       contents: read
       actions: read

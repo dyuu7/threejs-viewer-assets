@@ -8,10 +8,10 @@ from importlib.resources import files
 from pathlib import Path
 from urllib.parse import unquote, urlsplit
 
-import threejs_assets
+import threejs_viewer_assets
 
 EXAMPLES = Path(__file__).resolve().parent
-ASSETS = files("threejs_assets").joinpath("assets")
+ASSETS = files("threejs_viewer_assets").joinpath("assets")
 
 
 class Handler(BaseHTTPRequestHandler):
@@ -60,7 +60,7 @@ def main():
             json.dumps(
                 {
                     "url": f"http://127.0.0.1:{server.server_port}",
-                    "package_version": threejs_assets.__version__,
+                    "package_version": threejs_viewer_assets.__version__,
                     "upstream_version": manifest["upstream"]["version"],
                 }
             ),

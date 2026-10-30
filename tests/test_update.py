@@ -88,7 +88,7 @@ def registry(monkeypatch):
 
 @pytest.fixture
 def checkout(tmp_path, registry):
-    package = tmp_path / "src" / "threejs_assets"
+    package = tmp_path / "src" / "threejs_viewer_assets"
     package.mkdir(parents=True)
     (package / "__init__.py").write_text('__version__ = "0.185.0"\n')
     registry.publish("0.185.0")
@@ -98,7 +98,7 @@ def checkout(tmp_path, registry):
 
 
 def snapshot(checkout):
-    return read_tree(checkout / "src" / "threejs_assets")
+    return read_tree(checkout / "src" / "threejs_viewer_assets")
 
 
 def test_new_stable_release_updates_resource_and_package_versions(checkout, registry):
@@ -107,7 +107,7 @@ def test_new_stable_release_updates_resource_and_package_versions(checkout, regi
     assert changed
     assert previous["upstream"]["version"] == "0.185.0"
     assert manifest["upstream"]["version"] == "0.186.1"
-    assert read_version(checkout / "src" / "threejs_assets") == "0.186.1"
+    assert read_version(checkout / "src" / "threejs_viewer_assets") == "0.186.1"
     assert validate_source(root=checkout, modules=True) == manifest
 
 
@@ -120,7 +120,7 @@ def test_no_update_does_not_download_tarball(checkout, registry):
 
 
 def test_same_version_is_idempotent_and_preserves_post_release(checkout):
-    package = checkout / "src" / "threejs_assets"
+    package = checkout / "src" / "threejs_viewer_assets"
     (package / "__init__.py").write_text('__version__ = "0.185.0.post2"\n')
     before = snapshot(checkout)
     assert not update.synchronize(checkout, requested="0.185.0")[0]
@@ -128,7 +128,7 @@ def test_same_version_is_idempotent_and_preserves_post_release(checkout):
 
 
 def test_update_preserves_windows_version_file_line_endings(checkout, registry):
-    package = checkout / "src" / "threejs_assets"
+    package = checkout / "src" / "threejs_viewer_assets"
     version_file = package / "__init__.py"
     version_file.write_bytes(b'"""Package."""\r\n\r\n__version__ = "0.185.0"\r\n')
     registry.publish("0.186.1")
@@ -147,7 +147,7 @@ def test_older_latest_channel_does_not_downgrade(checkout, registry):
 def test_scope_expansion_refreshes_same_upstream_and_preserves_post_release(
     tmp_path, registry, monkeypatch, latest
 ):
-    package = tmp_path / "src" / "threejs_assets"
+    package = tmp_path / "src" / "threejs_viewer_assets"
     package.mkdir(parents=True)
     (package / "__init__.py").write_text('__version__ = "0.185.0"\n')
     registry.publish("0.185.0")
@@ -180,7 +180,7 @@ def test_scope_reduction_removes_unused_modules(checkout, monkeypatch):
 def test_scope_change_does_not_bypass_existing_resource_integrity(checkout, monkeypatch):
     monkeypatch.setattr(project, "ENTRYPOINTS", ENTRYPOINTS[:2])
     monkeypatch.setattr(update, "ENTRYPOINTS", ENTRYPOINTS[:2])
-    assets = checkout / "src" / "threejs_assets" / "assets"
+    assets = checkout / "src" / "threejs_viewer_assets" / "assets"
     (assets / ENTRYPOINTS[-1]).write_bytes(b"tampered module being removed from scope")
     before = snapshot(checkout)
     with pytest.raises(ValidationError, match="SHA-256 mismatch"):
@@ -365,7 +365,7 @@ def test_mismatched_python_releases_are_rejected(package):
 
 
 def test_manifest_detects_modified_missing_and_extra_resources(checkout):
-    assets = read_tree(checkout / "src" / "threejs_assets" / "assets")
+    assets = read_tree(checkout / "src" / "threejs_viewer_assets" / "assets")
     for altered in [
         dict(assets, **{"LICENSE": b"changed"}),
         {name: data for name, data in assets.items() if name != ENTRYPOINTS[-1]},

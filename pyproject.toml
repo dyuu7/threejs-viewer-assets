@@ -3,9 +3,9 @@ requires = ["hatchling==1.27.0"]
 build-backend = "hatchling.build"
 
 [project]
-name = "threejs-assets"
+name = "threejs-viewer-assets"
 dynamic = ["version"]
-description = "Official Three.js ESM assets for offline use in Python applications"
+description = "Offline Three.js WebGL core and selected viewer addons for Python applications"
 readme = "README.md"
 requires-python = ">=3.9"
 license = "MIT"
@@ -20,9 +20,9 @@ classifiers = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/dyuu7/threejs-assets"
-Repository = "https://github.com/dyuu7/threejs-assets"
-Issues = "https://github.com/dyuu7/threejs-assets/issues"
+Homepage = "https://github.com/dyuu7/threejs-viewer-assets"
+Repository = "https://github.com/dyuu7/threejs-viewer-assets"
+Issues = "https://github.com/dyuu7/threejs-viewer-assets/issues"
 
 [dependency-groups]
 dev = ["hatchling==1.27.0", "pytest>=8.3,<9", "ruff>=0.14,<1", "twine>=6,<7"]
@@ -32,10 +32,10 @@ browser = ["playwright>=1.55,<2"]
 browser = { requires-python = ">=3.10" }
 
 [tool.hatch.version]
-path = "src/threejs_assets/__init__.py"
+path = "src/threejs_viewer_assets/__init__.py"
 
 [tool.hatch.build.targets.wheel]
-packages = ["src/threejs_assets"]
+packages = ["src/threejs_viewer_assets"]
 
 [tool.hatch.build.targets.sdist]
 include = [

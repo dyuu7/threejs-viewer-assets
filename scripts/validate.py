@@ -40,7 +40,7 @@ SDIST_DIRS = {"src", "scripts", "tests", "examples", "docs"}
 
 def metadata_check(contents, version):
     metadata = BytesParser().parsebytes(contents)
-    require(metadata["Name"] == "threejs-assets", "Incorrect distribution name")
+    require(metadata["Name"] == "threejs-viewer-assets", "Incorrect distribution name")
     require(metadata["Version"] == version, "Incorrect distribution version")
     require(not metadata.get_all("Requires-Dist"), "Runtime dependencies must be empty")
     require(metadata["Requires-Python"] == ">=3.9", "Incorrect Python support metadata")
@@ -56,21 +56,24 @@ def wheel_files(path):
 
 
 def validate_distributions(directory, root=ROOT):
-    version = read_version(root / "src" / "threejs_assets")
+    version = read_version(root / "src" / "threejs_viewer_assets")
     wheels = list(directory.glob("*.whl"))
     sdists = list(directory.glob("*.tar.gz"))
     require(len(wheels) == len(sdists) == 1, "Expected exactly one wheel and one sdist")
     wheel, sdist = wheels[0], sdists[0]
-    require(wheel.name == f"threejs_assets-{version}-py3-none-any.whl", "Incorrect wheel filename")
-    require(sdist.name == f"threejs_assets-{version}.tar.gz", "Incorrect sdist filename")
-    package = root / "src" / "threejs_assets"
+    require(
+        wheel.name == f"threejs_viewer_assets-{version}-py3-none-any.whl",
+        "Incorrect wheel filename",
+    )
+    require(sdist.name == f"threejs_viewer_assets-{version}.tar.gz", "Incorrect sdist filename")
+    package = root / "src" / "threejs_viewer_assets"
     expected = {
-        f"threejs_assets/assets/{name}": data
+        f"threejs_viewer_assets/assets/{name}": data
         for name, data in read_tree(package / "assets").items()
     }
-    expected["threejs_assets/__init__.py"] = (package / "__init__.py").read_bytes()
+    expected["threejs_viewer_assets/__init__.py"] = (package / "__init__.py").read_bytes()
     contents = wheel_files(wheel)
-    info = f"threejs_assets-{version}.dist-info/"
+    info = f"threejs_viewer_assets-{version}.dist-info/"
     metadata_names = {info + name for name in ("METADATA", "WHEEL", "RECORD", "licenses/LICENSE")}
     require(set(contents) == set(expected) | metadata_names, "Unexpected or missing wheel files")
     for name, data in expected.items():
@@ -101,7 +104,7 @@ def validate_distributions(directory, root=ROOT):
             )
     with tarfile.open(sdist, "r:gz") as archive:
         members = archive.getmembers()
-        prefix = f"threejs_assets-{version}/"
+        prefix = f"threejs_viewer_assets-{version}/"
         source = {}
         for member in members:
             require(
@@ -139,15 +142,16 @@ def validate_installed():
     import importlib.metadata
     import importlib.resources
 
-    import threejs_assets
+    import threejs_viewer_assets
 
-    distribution = importlib.metadata.distribution("threejs-assets")
+    distribution = importlib.metadata.distribution("threejs-viewer-assets")
     require(not distribution.requires, "Installed package has runtime dependencies")
-    require(distribution.version == threejs_assets.__version__, "Installed version mismatch")
+    require(distribution.version == threejs_viewer_assets.__version__, "Installed version mismatch")
     require(
-        not Path(threejs_assets.__file__).resolve().is_relative_to(PACKAGE), "Imported checkout"
+        not Path(threejs_viewer_assets.__file__).resolve().is_relative_to(PACKAGE),
+        "Imported checkout",
     )
-    assets = importlib.resources.files("threejs_assets").joinpath("assets")
+    assets = importlib.resources.files("threejs_viewer_assets").joinpath("assets")
     manifest = validate_assets(read_tree(assets), distribution.version)
     print(f"Installed {distribution.version}: {len(manifest['files'])} verified upstream files")
 

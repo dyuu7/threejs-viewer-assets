@@ -1268,7 +1268,7 @@ wheels = [
 ]
 
 [[package]]
-name = "threejs-assets"
+name = "threejs-viewer-assets"
 source = { editable = "." }
 
 [package.dev-dependencies]

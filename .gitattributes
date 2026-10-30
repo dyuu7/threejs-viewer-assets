@@ -1,4 +1,4 @@
 * text=auto
 # Vendored bytes must remain identical to the npm archive on every platform.
-src/threejs_assets/assets/** -text -whitespace
+src/threejs_viewer_assets/assets/** -text -whitespace
 *.sh text eol=lf

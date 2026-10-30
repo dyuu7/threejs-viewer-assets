@@ -53,7 +53,9 @@ class RegistryRedirects(urllib.request.HTTPRedirectHandler):
 
 def fetch(url):
     official_url(url)
-    request = urllib.request.Request(url, headers={"User-Agent": "threejs-assets-maintenance/1"})
+    request = urllib.request.Request(
+        url, headers={"User-Agent": "threejs-viewer-assets-maintenance/1"}
+    )
     try:
         with urllib.request.build_opener(RegistryRedirects).open(request, timeout=45) as response:
             data = response.read(MAX_DOWNLOAD + 1)
@@ -165,7 +167,7 @@ def commit_update(package, files, version):
 
 
 def synchronize(root=ROOT, requested=None):
-    package = root / "src" / "threejs_assets"
+    package = root / "src" / "threejs_viewer_assets"
     assets = package / "assets"
     previous = None
     old_files = {}

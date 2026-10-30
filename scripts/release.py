@@ -14,7 +14,7 @@ from pathlib import Path
 from project import ROOT, VERSION_LINE, ValidationError, digest, require, validate_versions
 from validate import validate_distributions
 
-REPOSITORY = "dyuu7/threejs-assets"
+REPOSITORY = "dyuu7/threejs-viewer-assets"
 
 
 def command(*args, **kwargs):
@@ -46,11 +46,11 @@ def version_at(revision):
         git("rev-parse", f"{revision}^{{commit}}") == revision,
         "Expected a commit, not a tag object",
     )
-    source = git("show", f"{revision}:src/threejs_assets/__init__.py")
+    source = git("show", f"{revision}:src/threejs_viewer_assets/__init__.py")
     match = VERSION_LINE.search(source)
     require(match is not None, "Missing release version")
     version = match.group(1)
-    manifest = json.loads(git("show", f"{revision}:src/threejs_assets/assets/manifest.json"))
+    manifest = json.loads(git("show", f"{revision}:src/threejs_viewer_assets/assets/manifest.json"))
     validate_versions(version, manifest["upstream"]["version"])
     return version
 
@@ -80,8 +80,8 @@ def check_candidate(revision, main):
     require(paths, "Upstream update is empty")
     require(
         all(
-            path in {"uv.lock", "src/threejs_assets/__init__.py"}
-            or path.startswith("src/threejs_assets/assets/")
+            path in {"uv.lock", "src/threejs_viewer_assets/__init__.py"}
+            or path.startswith("src/threejs_viewer_assets/assets/")
             for path in paths
         ),
         "Automatic promotion may change only resources, their version, and uv.lock",
@@ -89,7 +89,7 @@ def check_candidate(revision, main):
 
 
 def pypi_files(version):
-    url = f"https://pypi.org/pypi/threejs-assets/{version}/json"
+    url = f"https://pypi.org/pypi/threejs-viewer-assets/{version}/json"
     try:
         with urllib.request.urlopen(url, timeout=30) as response:
             files = json.load(response)["urls"]
@@ -106,7 +106,10 @@ def pypi_files(version):
 
 
 def filenames(version):
-    return {f"threejs_assets-{version}-py3-none-any.whl", f"threejs_assets-{version}.tar.gz"}
+    return {
+        f"threejs_viewer_assets-{version}-py3-none-any.whl",
+        f"threejs_viewer_assets-{version}.tar.gz",
+    }
 
 
 def asset_hash(asset):
@@ -228,9 +231,9 @@ def github_release(directory):
     require(tag_commit(tag) == git("rev-parse", "HEAD"), "Release tag no longer matches artifacts")
     release = api(f"releases/tags/{tag}", missing=True)
     if release is None:
-        upstream = json.loads((ROOT / "src/threejs_assets/assets/manifest.json").read_text())[
-            "upstream"
-        ]["version"]
+        upstream = json.loads(
+            (ROOT / "src/threejs_viewer_assets/assets/manifest.json").read_text()
+        )["upstream"]["version"]
         release = api(
             "releases",
             method="POST",
@@ -239,9 +242,11 @@ def github_release(directory):
                 "name": tag,
                 "draft": True,
                 "body": (
-                    f"Official Three.js {upstream} ES modules and selected addons.\n\n"
-                    f"[PyPI](https://pypi.org/project/threejs-assets/{version}/) · "
+                    f"Three.js {upstream} WebGL core and selected viewer addons.\n\n"
+                    f"[PyPI](https://pypi.org/project/threejs-viewer-assets/{version}/) · "
                     f"[Upstream](https://github.com/mrdoob/three.js/releases/tag/r{upstream.split('.')[1]})"
+                    f" · [Scope and compatibility](https://github.com/{REPOSITORY}/blob/"
+                    f"{tag}/README.md#versions-and-compatibility)"
                 ),
             },
         )

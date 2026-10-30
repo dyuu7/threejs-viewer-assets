@@ -7,7 +7,9 @@ import subprocess
 from pathlib import Path, PurePosixPath
 
 ROOT = Path(__file__).resolve().parents[1]
-PACKAGE = ROOT / "src" / "threejs_assets"
+PACKAGE = ROOT / "src" / "threejs_viewer_assets"
+# Public viewer entry points; keep README scope and browser coverage aligned.
+# The remaining module closure is an implementation dependency, not a public API.
 ENTRYPOINTS = [
     "build/three.core.js",
     "build/three.module.js",
@@ -154,6 +156,6 @@ def validate_assets(files, package_version, *, modules=False, entrypoints=None):
 
 
 def validate_source(*, modules=False, root=ROOT):
-    package = root / "src" / "threejs_assets"
+    package = root / "src" / "threejs_viewer_assets"
     version = read_version(package)
     return validate_assets(read_tree(package / "assets"), version, modules=modules)
