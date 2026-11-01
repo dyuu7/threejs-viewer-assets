@@ -30,8 +30,9 @@ jobs:
       contents: write
       pull-requests: write
     outputs:
-      revision: ${{ steps.pr.outputs.pull-request-head-sha || steps.prepare.outputs.revision }}
-      promote: ${{ steps.pr.outputs.pull-request-head-sha != '' }}
+      # Cleanup can emit a head SHA without a PR; only a PR supplies a candidate.
+      revision: ${{ steps.pr.outputs.pull-request-number != '' && steps.pr.outputs.pull-request-head-sha || steps.prepare.outputs.revision }}
+      promote: ${{ steps.pr.outputs.pull-request-number != '' }}
     steps:
       - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
         with:
@@ -70,9 +71,9 @@ jobs:
       - name: Refresh project lock metadata
         if: steps.sync.outputs.changed == 'true'
         run: uv lock
-      - name: Open or update the upstream update PR
+      - name: Maintain the upstream update PR and clean up its branch
         id: pr
-        if: steps.sync.outputs.changed == 'true'
+        if: steps.prepare.outputs.sync == 'true'
         uses: peter-evans/create-pull-request@22a9089034f40e5a961c8808d113e2c98fb63676 # v7
         with:
           token: ${{ github.token }}
