@@ -79,7 +79,9 @@ jobs:
           branch: automation/update-threejs
           base: main
           title: 'chore(assets): update Three.js to ${{ steps.sync.outputs.version }}'
-          commit-message: 'chore(assets): update Three.js to ${{ steps.sync.outputs.version }}'
+          # GITHUB_TOKEN-created PR runs require approval. The checks job below
+          # validates this commit through workflow_call, which ignores [skip ci].
+          commit-message: 'chore(assets): update Three.js to ${{ steps.sync.outputs.version }} [skip ci]'
           body-path: ${{ runner.temp }}/threejs-update.md
           add-paths: |
             src/threejs_viewer_assets/
